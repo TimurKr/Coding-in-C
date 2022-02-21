@@ -3,4 +3,4 @@ project(prog_sem C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(prog_sem main.c)
+add_executable(w_1 set_operations.c)
