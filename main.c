@@ -6,29 +6,50 @@
 
 #define n 7
 
-void remove_duplicates(int len, unsigned int a[len]){
-    for (int i = 0; i < n; i++){
-        for (int j = 0; j < i; j++){
-            if (a[i] == a[j]) a[i] = 0;
-        }
+void pis_mnozinu(unsigned int len, unsigned int mn[len]){
+    for (int i = 0; i < len; i++){
+        printf("%d\t", mn[i]);
     }
+    printf("\n");
 }
 
-int prienik(int len, unsigned int a[len], unsigned int b[len], unsigned int c[len]){
-    int k = 0;
+unsigned int remove_duplicates(unsigned int len, unsigned int a[len]){
+    // replace duplicates with 0
+    for (int i = 0; i < len; i++) {
+        for (int j = i + 1; j < len; j++) {
+            if (a[i] == a[j]) {
+                a[j] = 0;
+            }
+        }
+    }
+
+    // move 0s to the back
     for (int i = 0; i < len; i++){
-        for (int j = 0; j < len; j++){
-            if (a[i] == b[j]){
-                c[k] = a[i];
-                int counter = 0;
-                for (int l = 0; l < len; l++){
-                    if (c[l] == c[k]) counter ++;
-                    if (counter == 2) {
-                        c[k] = 0;
-                        k--;
-                        break;
-                    }
+        if (a[i] == 0){
+            for (int j = len-1; j > i; j--){
+                if (a[j] != 0){
+                    a[i] = a[j];
+                    a[j] = 0;
+                    break;
                 }
+            }
+        }
+    }
+    unsigned int l = 0;
+    for (int i = 0; a[i]!=0 && i < len; i++){
+        l += 1;
+    }
+    return l;
+}
+
+
+unsigned int prienik(unsigned int a_len, unsigned int b_len, unsigned int a[a_len], unsigned int b[b_len],
+            unsigned int c[n]){
+    unsigned int k = 0;
+    for (int i = 0; i < a_len; i++){
+        for (int j = 0; j < b_len; j++){
+            if (a[i] == b[j]) {
+                c[k] = a[i];
                 k++;
             }
         }
@@ -36,60 +57,55 @@ int prienik(int len, unsigned int a[len], unsigned int b[len], unsigned int c[le
     return k;
 }
 
-int zjednotenie(int len, unsigned int a[len], unsigned int b[len], unsigned int c[2*len]) {
-    int k = 0;
-    for (int i = 0; i < len; i++) {
-        c[k] = a[i];
-        int counter = 0;
-        for (int l = 0; l < 2*len; l++) {
-            if (c[l] == c[k]) counter++;
-            if (counter == 2) {
-                c[k] = 0;
-                k--;
-                break;
-            }
-        }
-        k++;
+
+unsigned int zjednotenie(unsigned int a_len, unsigned int b_len, unsigned int a[a_len], unsigned int b[b_len],
+                unsigned int d[a_len + b_len]) {
+    for (unsigned int k = 0; k < a_len + b_len; k++) {
+        if (k < a_len) d[k] = a[k];
+        else d[k] = b[k - a_len];
     }
-    for (int i = 0; i < len; i++) {
-        c[k] = b[i];
-        int counter = 0;
-        for (int l = 0; l < c[k]; l++) {
-            if (c[l] == c[k]) counter++;
-            if (counter == 2) {
-                c[k] = 0;
-                k--;
-                break;
-            }
-        }
-        k++;
-    }
-    return k;
+    unsigned int d_len = remove_duplicates(a_len + b_len, d);
+    return d_len;
 }
 
-void pis_mnozinu(int len, unsigned int mn[len]){
-    for (int i = 0; i < len; i++){
-        printf("%d\t", mn[i]);
-    }
-    printf("\n");
-}
 
 int main() {
+    // init. lists
     unsigned int a[n] = {};
     unsigned int b[n] = {};
-    unsigned int c[n] = {};
-    unsigned int d[2*n] = {};
+
+    // generate lists
     srand(time(NULL));
     for (int i = 0; i < n; i++){
         a[i] = 1 + rand() % 10;
         b[i] = 1 + rand() % 10;
     }
-    remove_duplicates(n, a);
-    remove_duplicates(n, b);
+
+    printf("Listy:\n");
     pis_mnozinu(n, a);
     pis_mnozinu(n, b);
-    int dlzka_prienik = prienik(n, a, b, c);
-    pis_mnozinu(dlzka_prienik, c);
-//    int dlzka_zjednotenie = zjednotenie(n, a, b, d);
-//    pis_mnozinu(dlzka_zjednotenie, d);
+    printf("\n");
+
+    // cleanup lists
+    unsigned int a_len = remove_duplicates(n, a);
+    unsigned int b_len = remove_duplicates(n, b);
+
+    printf("Množiny:\n");
+    pis_mnozinu(a_len, a);
+    pis_mnozinu(b_len, b);
+    printf("\n");
+
+    // calculate intersection
+    unsigned int c[n] = {};
+    unsigned int c_len = prienik(a_len, b_len, a, b, c);
+
+    printf("Prienik:\n");
+    pis_mnozinu(c_len, c);
+    printf("\n");
+
+    // calculate union
+    unsigned int d[2 * n] = {};
+    unsigned int dlzka_zjednotenie = zjednotenie(a_len, b_len, a, b, d);
+    printf("Zjednotenie:\n");
+    pis_mnozinu(dlzka_zjednotenie, d);
 }
