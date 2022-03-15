@@ -5,3 +5,4 @@ set(CMAKE_C_STANDARD 99)
 
 add_executable(w_1 src/set_operations.c)
 add_executable(w_4 src/week_4.c)
+add_executable(w_5 src/week_5.c)

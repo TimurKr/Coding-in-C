@@ -13,8 +13,9 @@ int main(void){
     float f;
     double g;
     long double h;
+    short int *p = &b;
 
-    printf("char int: %lu\n", sizeof(a));
+    printf("char: %lu\n", sizeof(a));
     printf("short int: %lu\n", sizeof(b));
     printf("int: %lu\n", sizeof(c));
     printf("long: %lu\n", sizeof(d));
@@ -22,8 +23,7 @@ int main(void){
     printf("float: %lu\n", sizeof(f));
     printf("double: %lu\n", sizeof(g));
     printf("long double: %lu\n", sizeof(h));
-
-    short int *p = &b;
+    printf("pointer: %lu\n", sizeof(p));
 
     a = *p;
     printf("a = %d", a);
