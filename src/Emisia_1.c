@@ -5,7 +5,7 @@
 #include "stdio.h"
 
 unsigned int uholnik_roztaty_priamkou_pocet_komponent(
-        float *x, float *y, unsigned int l, float a, float b, float c) {
+        const float *x, const float *y, unsigned int l, float a, float b, float c) {
 
     int prienik_counter = 0;                // počítadlo, koľko krát prenikne priamka cez okraj uholnika
     unsigned short int last_pos = 0;        // -1 => pod priemkou, 1 => nad priamkov, 0 => na priamke
@@ -42,4 +42,15 @@ unsigned int uholnik_roztaty_priamkou_pocet_komponent(
     return prienik_counter;
 }
 
-int main()
+int main(void) {
+    float x[5] = {};
+    float y[5] = {};
+    float a, b, c;
+    a = 5;
+    b = 6;
+    c = 2;
+
+    printf("Našli sme %d preienikov, to znamená, že uholnik bol rozdelený na %d častí.",
+           uholnik_roztaty_priamkou_pocet_komponent(x,y,5,a,b,c),
+           uholnik_roztaty_priamkou_pocet_komponent(x,y,5,a,b,c)/2);
+}
