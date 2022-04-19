@@ -9,3 +9,5 @@ add_executable(w_5 src/week_5.c)
 add_executable(w_8 src/week_8.c)
 add_executable(E_1 src/Emisia_1.c)
 add_executable(set_operations2 src/set_operations_w_horda.c)
+add_executable(w_9 src/week_9.c)
+

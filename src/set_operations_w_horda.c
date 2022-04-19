@@ -86,5 +86,5 @@ int main(void){
     pis_mnozinu(c,5+7);
     Union(a,b,c,5,7);
     pis_mnozinu(c,5+7);
-    Intersection(a,b,d,5,7)
+    Intersection(a,b,d,5,7);
 }
