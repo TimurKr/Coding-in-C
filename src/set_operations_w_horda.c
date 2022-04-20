@@ -21,15 +21,19 @@ void swap(unsigned int i, unsigned int j, int *list) {
     list[j] = aux;
 }
 
-void remove_element(int *list, unsigned int *list_length, unsigned int index){
+void remove_element(int *list, unsigned int *list_length, int index){
     for(int i = index + 1; i < *list_length; i++){
         list[i-1] = list[i];
     }
+    *list_length -= 1;
 }
 
 void remove_duplicates(int *list, unsigned int *list_length){
-    for(int i = 0; i < &list_length; i++){
-
+    for(int i = 0; i < *list_length; i++){
+        if (list[i] == list[i+1]){
+            remove_element(list, list_length, i);
+            i--;
+        }
     }
 }
 
@@ -101,7 +105,7 @@ int main(void){
     heap_sort(a, a_l);
     heap_sort(b,b_l);
     pis_mnozinu(a,a_l);
-    remove_element(a, &a_l, 2);
+    remove_duplicates(a, &a_l);
     pis_mnozinu(a,a_l);
 //    pis_mnozinu(b,b_l);
 //    pis_mnozinu(c,c_l);
