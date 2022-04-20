@@ -29,7 +29,7 @@ void remove_element(int *list, unsigned int *list_length, int index){
 }
 
 void remove_duplicates(int *list, unsigned int *list_length){
-    for(int i = 0; i < *list_length; i++){
+    for(int i = 0; i < *list_length - 1; i++){
         if (list[i] == list[i+1]){
             remove_element(list, list_length, i);
             i--;
@@ -59,21 +59,26 @@ void heapify_node(int *list, unsigned int list_length, unsigned int root_index){
     }
 }
 
-void heap_sort(int *list, unsigned int list_length){
+void heap_sort(int *list, unsigned int *list_length){
     // Konvertuj na heap
     // stačí začať od rodiča poslednej, čiže n/2-1
-    for (unsigned int i = list_length/2 - 1; i < list_length; i--) {
-        heapify_node(list, list_length, i);
+    for (unsigned int i = *list_length/2 - 1; i < *list_length; i--) {
+        heapify_node(list, *list_length, i);
     }
-    swap(0, list_length-1, list);
+    swap(0, *list_length-1, list);
 
     // Postupne vždy uprac heap a daj najväčšie na koniec
-    for (unsigned int i = list_length-1; i > 1; i--){
+    for (unsigned int i = *list_length-1; i > 1; i--){
         heapify_node(list, i,0);
         swap(0, i-1, list);
 //        pis_mnozinu(list, list_length);
     }
 //    pis_mnozinu(list, list_length);
+}
+
+void set_from_list(int *list, unsigned int *list_length){
+    heap_sort(list, list_length);
+    remove_duplicates(list, list_length);
 }
 
 void Union(int *a, int *b, int *c, unsigned int a_l, unsigned int b_l){
@@ -102,11 +107,14 @@ int main(void){
     int b[7] = {6, 2, 16, 3, 9, 11, 7};
     int c[5+7];
     int d[7];
-    heap_sort(a, a_l);
-    heap_sort(b,b_l);
-    pis_mnozinu(a,a_l);
-    remove_duplicates(a, &a_l);
-    pis_mnozinu(a,a_l);
+    pis_mnozinu(a, a_l);
+    set_from_list(a, &a_l);
+    pis_mnozinu(a, a_l);
+
+    pis_mnozinu(b, b_l);
+    set_from_list(b, &b_l);
+    pis_mnozinu(b, b_l);
+
 //    pis_mnozinu(b,b_l);
 //    pis_mnozinu(c,c_l);
 //    Union(a,b,c,a_l,b_l);
