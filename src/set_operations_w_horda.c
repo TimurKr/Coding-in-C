@@ -85,9 +85,22 @@ void Union(int *a, int *b, int *c,
            unsigned int *a_l, unsigned int *b_l, unsigned int *c_l){
     int i = 0;
     int j = 0;
-    while (i <= *a_l && j < *b_l){
-
+    int k = 0;
+    while (i < *a_l && j < *b_l){
+        if (a[i] == b[j]){
+            c[k] = a[i];
+            k++;
+            i++;
+            j++;
+        }
+        else if (a[i] <= b[j]){
+            i++;
+        }
+        else if (a[i] >= b[j]){
+            j++;
+        }
     }
+    *c_l = k;
 }
 
 void Intersection(int *a, int *b, int *d, unsigned int a_l, unsigned int b_l){
@@ -102,7 +115,7 @@ int main(void){
     unsigned int d_l = 7;
 
     int a[5] = {4, 2, 8, 4, 14};
-    int b[7] = {6, 2, 16, 3, 9, 11, 7};
+    int b[7] = {6, 2, 16, 8, 9, 11, 7};
     int c[5+7];
     int d[7];
     pis_mnozinu(a, a_l);
@@ -113,9 +126,8 @@ int main(void){
     set_from_list(b, &b_l);
     pis_mnozinu(b, b_l);
 
-//    pis_mnozinu(b,b_l);
-//    pis_mnozinu(c,c_l);
-//    Union(a,b,c,a_l,b_l);
-//    pis_mnozinu(c,c_l);
+    pis_mnozinu(c, c_l);
+    Union(a, b, c, &a_l, &b_l, &c_l);
+    pis_mnozinu(c, c_l);
 //    Intersection(a,b,d,a_l,b_l);
 }
