@@ -81,15 +81,13 @@ void set_from_list(int *list, unsigned int *list_length){
     remove_duplicates(list, list_length);
 }
 
-void Union(int *a, int *b, int *c, unsigned int a_l, unsigned int b_l){
-    unsigned int c_l = a_l + b_l;
-    for (unsigned int i = 0; i < a_l; i++){
-        c[i] = a[i];
+void Union(int *a, int *b, int *c,
+           unsigned int *a_l, unsigned int *b_l, unsigned int *c_l){
+    int i = 0;
+    int j = 0;
+    while (i <= *a_l && j < *b_l){
+
     }
-    for (unsigned int i = a_l; i < c_l; i++){
-        c[i] = b[i-a_l];
-    }
-    pis_mnozinu(c,c_l);
 }
 
 void Intersection(int *a, int *b, int *d, unsigned int a_l, unsigned int b_l){
