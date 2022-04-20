@@ -2,10 +2,6 @@
 // Created by Timur Kramar on 17/04/2022.
 //
 
-//parent[i] := i-1/2
-//child[i] := i*2 + 1(2)
-#define n 13
-
 #include "stdio.h"
 
 void pis_mnozinu(int *list, unsigned int list_length){
@@ -59,7 +55,7 @@ void heapify_node(int *list, unsigned int list_length, unsigned int root_index){
     }
 }
 
-void heap_sort(int *list, unsigned int *list_length){
+void heap_sort(int *list, const unsigned int *list_length){
     // Konvertuj na heap
     // stačí začať od rodiča poslednej, čiže n/2-1
     for (unsigned int i = *list_length/2 - 1; i < *list_length; i--) {
@@ -81,8 +77,8 @@ void set_from_list(int *list, unsigned int *list_length){
     remove_duplicates(list, list_length);
 }
 
-void Union(int *a, int *b, int *c,
-           unsigned int *a_l, unsigned int *b_l, unsigned int *c_l){
+void Union(const int *a, const int *b, int *c,
+           const unsigned int *a_l, const unsigned int *b_l, unsigned int *c_l){
     int i = 0;
     int j = 0;
     int k = 0;
@@ -103,11 +99,37 @@ void Union(int *a, int *b, int *c,
     *c_l = k;
 }
 
-void Intersection(int *a, int *b, int *d, unsigned int a_l, unsigned int b_l){
-    heap_sort(a,a_l);
-    heap_sort(b,b_l);
+void Intersection(const int *a, const int *b, int *c,
+                  const unsigned int *a_l, const unsigned int *b_l, unsigned int *c_l){
+    int i = 0;
+    int j = 0;
+    int k = 0;
+    while (i < *a_l && j < *b_l) {
+        if (a[i] == b[j]){
+            i++;
+            j++;
+        }
+        else if (a[i] <= b[j]){
+            c[k] = a[i];
+            k++;
+            i++;
+        }
+        else if (a[i] >= b[j]){
+            c[k] = b[j];
+            k++;
+            j++;
+        }
+    }
+    for (i = i; i < *a_l; i++){
+        c[k] = a[i];
+        k++;
+    }
+    for (j = j; j < *b_l; j++){
+        c[k] = b[j];
+        k++;
+    }
+    *c_l = k;
 }
-
 int main(void){
     unsigned int a_l = 5;
     unsigned int b_l = 7;
@@ -115,7 +137,7 @@ int main(void){
     unsigned int d_l = 7;
 
     int a[5] = {4, 2, 8, 4, 14};
-    int b[7] = {6, 2, 16, 8, 9, 11, 7};
+    int b[7] = {6, 2, 16, 8, 9, 11, 20};
     int c[5+7];
     int d[7];
     pis_mnozinu(a, a_l);
@@ -129,5 +151,8 @@ int main(void){
     pis_mnozinu(c, c_l);
     Union(a, b, c, &a_l, &b_l, &c_l);
     pis_mnozinu(c, c_l);
-//    Intersection(a,b,d,a_l,b_l);
+
+    pis_mnozinu(d, d_l);
+    Intersection(a, b, d, &a_l, &b_l, &d_l);
+    pis_mnozinu(d, d_l);
 }
