@@ -21,6 +21,18 @@ void swap(unsigned int i, unsigned int j, int *list) {
     list[j] = aux;
 }
 
+void remove_element(int *list, unsigned int *list_length, unsigned int index){
+    for(int i = index + 1; i < *list_length; i++){
+        list[i-1] = list[i];
+    }
+}
+
+void remove_duplicates(int *list, unsigned int *list_length){
+    for(int i = 0; i < &list_length; i++){
+
+    }
+}
+
 void heapify_node(int *list, unsigned int list_length, unsigned int root_index){
     unsigned int largest_index = root_index;
     unsigned int child1 = root_index*2 + 1;
@@ -77,14 +89,23 @@ void Intersection(int *a, int *b, int *d, unsigned int a_l, unsigned int b_l){
 }
 
 int main(void){
+    unsigned int a_l = 5;
+    unsigned int b_l = 7;
+    unsigned int c_l = 12;
+    unsigned int d_l = 7;
+
     int a[5] = {4, 2, 8, 4, 14};
     int b[7] = {6, 2, 16, 3, 9, 11, 7};
     int c[5+7];
     int d[7];
-    pis_mnozinu(a,5);
-    pis_mnozinu(b,7);
-    pis_mnozinu(c,5+7);
-    Union(a,b,c,5,7);
-    pis_mnozinu(c,5+7);
-    Intersection(a,b,d,5,7);
+    heap_sort(a, a_l);
+    heap_sort(b,b_l);
+    pis_mnozinu(a,a_l);
+    remove_element(a, &a_l, 2);
+    pis_mnozinu(a,a_l);
+//    pis_mnozinu(b,b_l);
+//    pis_mnozinu(c,c_l);
+//    Union(a,b,c,a_l,b_l);
+//    pis_mnozinu(c,c_l);
+//    Intersection(a,b,d,a_l,b_l);
 }
