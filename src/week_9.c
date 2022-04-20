@@ -16,5 +16,5 @@
 int main(int argn, char **argc){
     argn; // Koľko bolo v príkazovom riadku v momente spustenia programu argumentov + 1
     argc; // Adresa poľa smerníkov, ukazujúcich na začiatky jednotlivých POSIX reťazcov obsahujúcich tokeny z prík.riad.
-    printf();
+    printf("");
 }
